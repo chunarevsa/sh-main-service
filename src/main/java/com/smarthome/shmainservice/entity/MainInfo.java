@@ -1,4 +1,4 @@
-package com.smarthome.mainservice.entity;
+package com.smarthome.shmainservice.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

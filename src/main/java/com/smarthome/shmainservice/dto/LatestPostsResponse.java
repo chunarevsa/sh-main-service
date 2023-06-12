@@ -1,7 +1,7 @@
-package com.smarthome.mainservice.dto;
+package com.smarthome.shmainservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.smarthome.mainservice.entity.Post;
+import com.smarthome.shmainservice.entity.Post;
 
 import java.util.Set;
 

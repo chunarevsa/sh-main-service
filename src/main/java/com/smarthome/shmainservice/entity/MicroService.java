@@ -1,4 +1,4 @@
-package com.smarthome.mainservice.entity;
+package com.smarthome.shmainservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

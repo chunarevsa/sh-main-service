@@ -1,4 +1,4 @@
-package com.smarthome.mainservice.dto;
+package com.smarthome.shmainservice.dto;
 
 public class PostRequest {
 

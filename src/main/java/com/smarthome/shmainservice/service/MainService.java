@@ -1,7 +1,7 @@
-package com.smarthome.mainservice.service;
+package com.smarthome.shmainservice.service;
 
-import com.smarthome.mainservice.entity.MainInfo;
-import com.smarthome.mainservice.repo.MainRepository;
+import com.smarthome.shmainservice.entity.MainInfo;
+import com.smarthome.shmainservice.repo.MainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

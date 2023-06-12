@@ -1,6 +1,6 @@
-package com.smarthome.mainservice.repo;
+package com.smarthome.shmainservice.repo;
 
-import com.smarthome.mainservice.entity.MainInfo;
+import com.smarthome.shmainservice.entity.MainInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

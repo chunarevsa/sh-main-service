@@ -1,8 +1,8 @@
-package com.smarthome.mainservice.service;
+package com.smarthome.shmainservice.service;
 
-import com.smarthome.mainservice.dto.PostRequest;
-import com.smarthome.mainservice.entity.Post;
-import com.smarthome.mainservice.repo.PostRepository;
+import com.smarthome.shmainservice.dto.PostRequest;
+import com.smarthome.shmainservice.entity.Post;
+import com.smarthome.shmainservice.repo.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

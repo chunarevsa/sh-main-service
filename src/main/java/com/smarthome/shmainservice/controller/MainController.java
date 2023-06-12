@@ -1,10 +1,10 @@
-package com.smarthome.mainservice.controller;
+package com.smarthome.shmainservice.controller;
 
-import com.smarthome.mainservice.dto.MainInfoResponse;
-import com.smarthome.mainservice.entity.MainInfo;
-import com.smarthome.mainservice.entity.Post;
-import com.smarthome.mainservice.service.MainService;
-import com.smarthome.mainservice.service.PostService;
+import com.smarthome.shmainservice.dto.MainInfoResponse;
+import com.smarthome.shmainservice.entity.MainInfo;
+import com.smarthome.shmainservice.entity.Post;
+import com.smarthome.shmainservice.service.MainService;
+import com.smarthome.shmainservice.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

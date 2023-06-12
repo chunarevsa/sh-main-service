@@ -1,8 +1,8 @@
-package com.smarthome.mainservice.controller;
+package com.smarthome.shmainservice.controller;
 
 import com.smarthome.mainservice.dto.LatestPostsResponse;
-import com.smarthome.mainservice.dto.PostResponse;
 import com.smarthome.mainservice.dto.PostRequest;
+import com.smarthome.mainservice.dto.PostResponse;
 import com.smarthome.mainservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

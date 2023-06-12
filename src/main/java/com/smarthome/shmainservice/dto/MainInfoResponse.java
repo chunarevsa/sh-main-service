@@ -1,7 +1,7 @@
-package com.smarthome.mainservice.dto;
+package com.smarthome.shmainservice.dto;
 
-import com.smarthome.mainservice.entity.MainInfo;
-import com.smarthome.mainservice.entity.Post;
+import com.smarthome.shmainservice.entity.MainInfo;
+import com.smarthome.shmainservice.entity.Post;
 import org.springframework.data.domain.Page;
 
 public class MainInfoResponse {
