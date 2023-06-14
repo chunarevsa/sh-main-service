@@ -1,54 +1,41 @@
 package com.smarthome.shmainservice.controller;
 
-import com.smarthome.shmainservice.dto.MainInfoResponse;
 import com.smarthome.shmainservice.entity.MainInfo;
-import com.smarthome.shmainservice.entity.Post;
+import com.smarthome.shmainservice.entity.ServiceRefer;
 import com.smarthome.shmainservice.service.MainService;
-import com.smarthome.shmainservice.service.PostService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.smarthome.shmainservice.util.ResponseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/v1/main")
-//@PreAuthorize("hasRole('USER')") // TODO: set up authorization
-// TODO: Just do it: Common module for Auth
-public class MainController {
+import java.util.List;
 
-    private final PostService postService;
+@RestController
+@RequestMapping("/api/v1/main")
+public class MainController {
     private final MainService mainService;
 
-    public MainController(PostService postService, MainService mainService) {
-        this.postService = postService;
+    @Autowired
+    public MainController(MainService mainService) {
         this.mainService = mainService;
     }
 
-    //GET /main RESP: Info, Page<Post>, Map<nameService, reference>
-    //(front-service)
     @GetMapping
-    public ResponseEntity getMainPage(Pageable pageable) {
-        Page<Post> pageOfPosts;
-        MainInfo mainInfo;
-        try {
-            mainInfo = mainService.getMainInfo().orElseThrow(() -> new Exception("Can't load main info"));
-            pageOfPosts = postService.getPageOfPosts(pageable);
-        } catch (Exception e) {
-            // TODO add logging
-            return ResponseEntity.internalServerError().body(e);
-        }
-
-        return ResponseEntity.ok().body(new MainInfoResponse(mainInfo, pageOfPosts));
+    public ResponseEntity<MainInfo> getMainInfo() {
+        return ResponseUtil.wrapOrNotFound(mainService.getActualMainInfo());
     }
 
-    //POST /main/logout (front-service) | auth
+    @GetMapping("/refers")
+    public List<ServiceRefer> getServicesRefers() {
+        return mainService.getActualServicesRefers();
+    }
+
     @PostMapping("/logout")
-    public ResponseEntity logout() {
-        // TODO: Just do it: Common module for Auth
-        // TODO: Just do it /main/logout (front-service) | auth
+    public ResponseEntity<Void> logout() {
+        // TODO: logout
         return ResponseEntity.ok().body(null);
     }
 }

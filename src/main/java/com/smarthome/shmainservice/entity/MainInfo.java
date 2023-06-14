@@ -9,10 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "main_info")
 public class MainInfo {
 
     @Id
-    @Column(name = "MAIN_ID")
+    @Column(name = "main_info_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,28 +25,22 @@ public class MainInfo {
     @JoinColumn(nullable = false)
     private Instant updated;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "WELCOME_TEXT", nullable = false)
+    @Column(name = "welcome_text", nullable = false)
     private String welcomeText;
 
-    @Column(name = "IMAGE_URL", nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
-
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "MAIN_ID")
-    private Set<MicroService> services = new HashSet<>();
 
     public MainInfo() {
     }
 
-    public MainInfo(String title, String welcomeText, String imageUrl, Set<MicroService> services) {
+    public MainInfo(String title, String welcomeText, String imageUrl) {
         this.title = title;
         this.welcomeText = welcomeText;
         this.imageUrl = imageUrl;
-        this.services = services;
     }
 
     public Long getId() {
@@ -88,14 +83,6 @@ public class MainInfo {
         this.imageUrl = imageUrl;
     }
 
-    public Set<MicroService> getServices() {
-        return services;
-    }
-
-    public void setServices(Set<MicroService> services) {
-        this.services = services;
-    }
-
     @Override
     public String toString() {
         return "MainInfo{" +
@@ -105,7 +92,6 @@ public class MainInfo {
                 ", title='" + title + '\'' +
                 ", welcomeText='" + welcomeText + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", services=" + services +
                 '}';
     }
 

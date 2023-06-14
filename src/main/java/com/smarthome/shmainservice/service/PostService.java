@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,12 +26,17 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public Optional<Set<Post>> getLatestPosts() {
-        return postRepository.findTop10ByOrderByCreatedDesc(); // TODO: check It is work?
+    public List<Post> getLatestPosts(Long count) {
+        return postRepository.findLastPosts(count); // TODO: check It is work?
     }
 
-    public Optional<Post> addPost(PostRequest req) {
-        return Optional.of(postRepository.save(new Post(req.getText(), req.getTitle(), req.getImageUrl())));
+    public Page<Post> getPageOfPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    public Post addPost(PostRequest req) {
+        return postRepository.save(new Post(req.getText(), req.getTitle(), req.getImageUrl()));
+
     }
 
     public Optional<Post> editPost(Long id, PostRequest req) {
@@ -52,7 +58,5 @@ public class PostService {
         });
     }
 
-    public Page<Post> getPageOfPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
-    }
+
 }

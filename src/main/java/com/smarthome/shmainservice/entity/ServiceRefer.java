@@ -1,39 +1,35 @@
 package com.smarthome.shmainservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
-public class MicroService {
+@Table(name = "refer")
+public class ServiceRefer {
 
     @Id
-    @Column(name = "MICROSERVICE_ID")
+    @Column(name = "service_refer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(nullable = false)
+    @NaturalId
     private String name;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "LINK", nullable = false)
+    @Column(nullable = false)
     private String link;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ITEM_ID", insertable = false, updatable = false)
-    private MainInfo info;
-
-    public MicroService() {
+    public ServiceRefer() {
     }
 
-    public MicroService(String name, String title, String link, MainInfo info) {
+    public ServiceRefer(String name, String title, String link) {
         this.name = name;
         this.title = title;
         this.link = link;
-        this.info = info;
     }
 
     public Long getId() {
@@ -68,14 +64,6 @@ public class MicroService {
         this.link = link;
     }
 
-    public MainInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(MainInfo info) {
-        this.info = info;
-    }
-
     @Override
     public String toString() {
         return "MicroService{" +
@@ -83,7 +71,6 @@ public class MicroService {
                 ", name='" + name + '\'' +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +
-                ", info=" + info +
                 '}';
     }
 }
