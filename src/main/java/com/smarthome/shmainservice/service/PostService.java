@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class PostService {
@@ -39,24 +38,22 @@ public class PostService {
 
     }
 
-    public Optional<Post> editPost(Long id, PostRequest req) {
+    public Optional<Post> updatePost(Long id, PostRequest req) {
         return postRepository.findById(id).map(post -> {
-            post.setActive(req.getActive());
-            post.setTitle(req.getTitle());
-            post.setText(req.getText());
-            post.setImageUrl(req.getImageUrl());
+            if (req.getActive() != null) post.setActive(req.getActive());
+            if (req.getTitle() != null) post.setTitle(req.getTitle());
+            if (req.getText() != null) post.setText(req.getText());
+            if (req.getImageUrl() != null) post.setImageUrl(req.getImageUrl());
             // TODO check saved or not
             return post;
         });
     }
 
-    public Optional<Post> deletePost(Long id) {
+    public Optional<Post> deactivatePost(Long id) {
         return postRepository.findById(id).map(post -> {
             post.setActive(false);
             // TODO check saved or not
             return post;
         });
     }
-
-
 }

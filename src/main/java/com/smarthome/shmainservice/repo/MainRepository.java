@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface MainRepository extends JpaRepository<MainInfo, Long> {
-    Optional<MainInfo> findTop10ByOrderByCreatedDesc();
     @Query(value = "select * from main_info;") // TODO: Just do it
     Optional<MainInfo> findLastInfo();
 }

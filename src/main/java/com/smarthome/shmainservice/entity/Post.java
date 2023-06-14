@@ -7,15 +7,15 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "POST")
+@Table(name = "post")
 public class Post {
 
     @Id
-    @Column(name = "POST_ID")
+    @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "IS_ACTIVE", nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean active;
 
     @CreatedDate
@@ -26,13 +26,13 @@ public class Post {
     @JoinColumn(nullable = false)
     private Instant updated;
 
-    @Column(name = "TEXT", nullable = false)
+    @Column(nullable = false)
     private String text;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "IMAGE_URL", nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     public Post() {

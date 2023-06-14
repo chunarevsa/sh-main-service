@@ -33,9 +33,4 @@ public class MainController {
         return mainService.getActualServicesRefers();
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        // TODO: logout
-        return ResponseEntity.ok().body(null);
-    }
 }

@@ -27,7 +27,7 @@ public final class HeaderUtil {
         return createAlert(applicationName, message, param);
     }
 
-    public static HttpHeaders createEntityDeletionAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
+    public static HttpHeaders createEntityDeactivateAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
         String message = enableTranslation ? applicationName + "." + entityName + ".deleted" : "A " + entityName + " is deleted with identifier " + param;
         return createAlert(applicationName, message, param);
     }

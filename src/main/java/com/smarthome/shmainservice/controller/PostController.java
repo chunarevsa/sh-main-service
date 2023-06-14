@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/post")
@@ -54,21 +55,28 @@ public class PostController {
     @PostMapping("/add")
     public ResponseEntity<Post> addPost(PostRequest req) throws URISyntaxException {
         final Post result = postService.addPost(req);
-        return ResponseEntity.created(new URI("/api/v1/post/"+ result.getId()))
+        return ResponseEntity.created(new URI("/api/v1/post/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
                 .body(result);
     }
 
     //POST /post/{id}/edit (front-service, discord-bot-service)
     @PostMapping("/{id}/edit")
-    public ResponseEntity editPost(@PathVariable(value = "id") Long id, PostRequest req) throws Exception {
-        return postService.editPost(id, req).map(post -> ResponseEntity.ok(PostResponse.fromPost(post))).orElseThrow(() -> new Exception("Post is not edited")); // TODO: add Exception
+    public ResponseEntity updatePost(@PathVariable(value = "id") Long id, PostRequest req) {
+        final Optional<Post> result = postService.updatePost(id, req);
+        return ResponseUtil.wrapOrNotFound(
+                result,
+                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
+        );
     }
 
     //POST /post/{id}/delete (front-service, discord-bot-service)
     @PostMapping("/{id}/delete")
-    public ResponseEntity deletePost(@PathVariable(value = "id") Long id) throws Exception {
-        return postService.deletePost(id).map(post -> ResponseEntity.ok(PostResponse.fromPost(post))).orElseThrow(() -> new Exception("Post is not deleted")); // TODO: add Exception
+    public ResponseEntity deactivateTEPost(@PathVariable(value = "id") Long id) {
+        final Optional<Post> result = postService.deactivatePost(id);
+        return ResponseUtil.wrapOrNotFound(
+                result,
+                HeaderUtil.createEntityDeactivateAlert(applicationName, false, ENTITY_NAME, id.toString())
+        );
     }
-
 }
