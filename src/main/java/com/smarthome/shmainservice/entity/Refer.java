@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "refer")
-public class ServiceRefer {
+public class Refer implements DataAuditing {
 
     @Id
-    @Column(name = "service_refer_id")
+    @Column(name = "refer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NaturalId
     private String name;
 
@@ -23,13 +23,17 @@ public class ServiceRefer {
     @Column(nullable = false)
     private String link;
 
-    public ServiceRefer() {
+    @Column(nullable = false)
+    private Boolean isServiceRefer;
+
+    public Refer() {
     }
 
-    public ServiceRefer(String name, String title, String link) {
+    public Refer(String name, String title, String link, Boolean isServiceRefer) {
         this.name = name;
         this.title = title;
         this.link = link;
+        this.isServiceRefer = isServiceRefer;
     }
 
     public Long getId() {
@@ -64,13 +68,22 @@ public class ServiceRefer {
         this.link = link;
     }
 
+    public Boolean isServiceRefer() {
+        return isServiceRefer;
+    }
+
+    public void setIsServiceRefer(Boolean serviceRefer) {
+        isServiceRefer = serviceRefer;
+    }
+
     @Override
     public String toString() {
-        return "MicroService{" +
+        return "Refer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +
+                ", isServiceRefer=" + isServiceRefer +
                 '}';
     }
 }

@@ -33,22 +33,24 @@ public class PostController {
         this.postService = postService;
     }
 
+    @GetMapping()
+    public List<Post> getPosts() {
+        return postService.getPosts();
+    }
+
     @PostMapping("/getPage")
     public Page<Post> getPageOfPosts(GetPostsRequest req) {
         return postService.getPageOfPosts(req.getPageable());
     }
 
-    //GET /post/{id} (front-service, discord-bot-service)
-    //RESP: Post
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> getPost(@PathVariable Long id) {
-        return ResponseUtil.wrapOrNotFound(postService.getPost(id));
-    }
-
-    //GET /post/last (discord-bot-service) RESP: Set<Post>
     @GetMapping("/getLast/{count}")
     public List<Post> getLatestPosts(@PathVariable Long count) {
         return postService.getLatestPosts(count);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPost(@PathVariable Long id) {
+        return ResponseUtil.wrapOrNotFound(postService.getPost(id));
     }
 
     //POST /post/add (front-service, discord-bot-service)
@@ -71,8 +73,8 @@ public class PostController {
     }
 
     //POST /post/{id}/delete (front-service, discord-bot-service)
-    @PostMapping("/{id}/delete")
-    public ResponseEntity deactivateTEPost(@PathVariable(value = "id") Long id) {
+    @PostMapping("/{id}/deactivate")
+    public ResponseEntity deactivatePost(@PathVariable(value = "id") Long id) {
         final Optional<Post> result = postService.deactivatePost(id);
         return ResponseUtil.wrapOrNotFound(
                 result,

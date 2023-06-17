@@ -2,32 +2,23 @@ package com.smarthome.shmainservice.service;
 
 import com.smarthome.shmainservice.dto.MainInfoRequest;
 import com.smarthome.shmainservice.entity.MainInfo;
-import com.smarthome.shmainservice.entity.ServiceRefer;
 import com.smarthome.shmainservice.repo.MainInfoRepository;
-import com.smarthome.shmainservice.repo.ServiceReferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MainService {
+public class MainInfoService {
     private final MainInfoRepository mainInfoRepository;
-    private final ServiceReferRepository serviceReferRepository;
 
     @Autowired
-    public MainService(MainInfoRepository mainInfoRepository, ServiceReferRepository serviceReferRepository) {
+    public MainInfoService(MainInfoRepository mainInfoRepository) {
         this.mainInfoRepository = mainInfoRepository;
-        this.serviceReferRepository = serviceReferRepository;
     }
 
     public Optional<MainInfo> getActualMainInfo() {
         return mainInfoRepository.findTop1ByOrderByIdDesc();
-    }
-
-    public List<ServiceRefer> getActualServicesRefers() {
-        return serviceReferRepository.findAll();
     }
 
     public MainInfo addMainInfo(MainInfoRequest req) {

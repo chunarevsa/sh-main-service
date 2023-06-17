@@ -21,21 +21,24 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Optional<Post> getPost(Long id) {
-        return postRepository.findById(id);
-    }
-
-    public List<Post> getLatestPosts(Long count) {
-        return postRepository.findAll(); // TODO: findLast
+    public List<Post> getPosts() {
+        return postRepository.findAll();
     }
 
     public Page<Post> getPageOfPosts(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
 
+    public List<Post> getLatestPosts(Long count) {
+        return postRepository.findAll(); // TODO: findLast
+    }
+
+    public Optional<Post> getPost(Long id) {
+        return postRepository.findById(id);
+    }
+
     public Post addPost(PostRequest req) {
         return postRepository.save(new Post(req.isActive(), req.getText(), req.getTitle(), req.getImageUrl()));
-
     }
 
     public Optional<Post> updatePost(Long id, PostRequest req) {
