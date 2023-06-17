@@ -29,14 +29,15 @@ public class ReferService {
         return referRepository.save(new Refer(req.getName(), req.getTitle(), req.getLink(), req.isServiceRefer()));
     }
 
-    public Optional<Refer> updateRefer(Long id, ReferRequest req) {
-        return referRepository.findById(id).map(refer -> {
-            if (req.getName() != null) refer.setName(req.getName());
-            if (req.getTitle() != null) refer.setTitle(req.getTitle());
-            if (req.getLink() != null) refer.setLink(req.getLink());
-            if (req.isServiceRefer() != null) refer.setIsServiceRefer(req.isServiceRefer());
-            return refer;
+    public Refer updateRefer(Long id, ReferRequest req) throws Exception {
+        Optional<Refer> refer = referRepository.findById(id).map(it -> {
+            if (req.getName() != null) it.setName(req.getName());
+            if (req.getTitle() != null) it.setTitle(req.getTitle());
+            if (req.getLink() != null) it.setLink(req.getLink());
+            if (req.isServiceRefer() != null) it.setIsServiceRefer(req.isServiceRefer());
+            return it;
         });
+        return refer.map(referRepository::save).orElseThrow(() -> new Exception("Not found"));
     }
 
     public void deleteRefer(Long id) {

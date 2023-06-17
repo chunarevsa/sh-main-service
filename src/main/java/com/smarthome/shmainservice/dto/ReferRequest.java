@@ -5,13 +5,13 @@ public class ReferRequest {
     private String name;
     private String title;
     private String link;
-    private Boolean isServiceRefer;
+    private Boolean serviceRefer;
 
     public ReferRequest(String name, String title, String link, Boolean isServiceRefer) {
         this.name = name;
         this.title = title;
         this.link = link;
-        this.isServiceRefer = isServiceRefer;
+        this.serviceRefer = isServiceRefer;
     }
 
     public ReferRequest() {}
@@ -41,11 +41,11 @@ public class ReferRequest {
     }
 
     public Boolean isServiceRefer() {
-        return isServiceRefer;
+        return serviceRefer;
     }
 
     public void setServiceRefer(Boolean serviceRefer) {
-        isServiceRefer = serviceRefer;
+        this.serviceRefer = serviceRefer;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ReferRequest {
                 "name='" + name + '\'' +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +
-                ", isServiceRefer=" + isServiceRefer +
+                ", serviceRefer=" + serviceRefer +
                 '}';
     }
 }

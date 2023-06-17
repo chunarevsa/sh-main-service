@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/refer")
-public class RefersController {
+public class ReferController {
     @Value("${spring.application.name}")
     private String applicationName;
     private static final String ENTITY_NAME = "refer";
     private final ReferService referService;
 
     @Autowired
-    public RefersController(ReferService referService) {
+    public ReferController(ReferService referService) {
         this.referService = referService;
     }
 
@@ -46,18 +45,16 @@ public class RefersController {
                 .body(result);
     }
 
-    @PostMapping("/{id}/edit")
-    public ResponseEntity updateRefer(@PathVariable(value = "id") Long id,  @RequestBody ReferRequest req) {
-        final Optional<Refer> result = referService.updateRefer(id, req);
-        return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
-        );
+    @PostMapping("/{id}/update")
+    public ResponseEntity<Refer> updateRefer(@PathVariable(value = "id") Long id,  @RequestBody ReferRequest req) throws Exception {
+        final Refer result = referService.updateRefer(id, req);
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
-    //POST /post/{id}/delete (front-service, discord-bot-service)
     @PostMapping("/{id}/delete")
-    public ResponseEntity deleteRefer(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Refer> deleteRefer(@PathVariable(value = "id") Long id) {
         referService.deleteRefer(id);
         return ResponseEntity.noContent().headers(
                 HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
