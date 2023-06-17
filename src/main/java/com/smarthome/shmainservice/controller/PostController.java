@@ -53,7 +53,7 @@ public class PostController {
 
     //POST /post/add (front-service, discord-bot-service)
     @PostMapping("/add")
-    public ResponseEntity<Post> addPost(PostRequest req) throws URISyntaxException {
+    public ResponseEntity<Post> addPost(@RequestBody PostRequest req) throws URISyntaxException {
         final Post result = postService.addPost(req);
         return ResponseEntity.created(new URI("/api/v1/post/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

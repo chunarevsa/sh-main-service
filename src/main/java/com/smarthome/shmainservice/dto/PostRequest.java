@@ -7,14 +7,14 @@ public class PostRequest {
     private String title;
     private String imageUrl;
 
-    public PostRequest(boolean active, String text, String title, String imageUrl) {
+    public PostRequest(Boolean active, String text, String title, String imageUrl) {
         this.active = active;
         this.text = text;
         this.title = title;
         this.imageUrl = imageUrl;
     }
 
-    public Boolean getActive() {
+    public Boolean isActive() {
         return active;
     }
 

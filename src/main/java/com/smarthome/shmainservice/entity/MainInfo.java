@@ -8,26 +8,29 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "main_info")
-public class MainInfo {
+public class MainInfo implements DataAuditing {
 
     @Id
     @Column(name = "main_info_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @CreatedDate
-    @JoinColumn(nullable = false, updatable = false)
-    private Instant created;
+//    @CreatedDate
+//    @JoinColumn(nullable = false, updatable = false)
+//    private Instant created;
+//
+//    @LastModifiedDate
+//    @JoinColumn(nullable = false)
+//    private Instant updated;
 
-    @LastModifiedDate
-    @JoinColumn(nullable = false)
-    private Instant updated;
+    @Column(name = "active", nullable = false)
+    private Boolean active;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "welcome_text", nullable = false)
-    private String welcomeText;
+    @Column(nullable = false)
+    private String text;
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
@@ -35,27 +38,28 @@ public class MainInfo {
     public MainInfo() {
     }
 
-    public MainInfo(String title, String welcomeText, String imageUrl) {
+    public MainInfo(Boolean active, String title, String text, String imageUrl) {
         this.title = title;
-        this.welcomeText = welcomeText;
+        this.text = text;
         this.imageUrl = imageUrl;
+        this.active = active;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Instant getCreated() {
-        return created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
-    }
+//    public Instant getCreated() {
+//        return created;
+//    }
+//
+//    public Instant getUpdated() {
+//        return updated;
+//    }
+//
+//    public void setUpdated(Instant updated) {
+//        this.updated = updated;
+//    }
 
     public String getTitle() {
         return title;
@@ -65,12 +69,12 @@ public class MainInfo {
         this.title = title;
     }
 
-    public String getWelcomeText() {
-        return welcomeText;
+    public String getText() {
+        return text;
     }
 
-    public void setWelcomeText(String welcomeText) {
-        this.welcomeText = welcomeText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getImageUrl() {
@@ -81,16 +85,32 @@ public class MainInfo {
         this.imageUrl = imageUrl;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+//    public void setCreated(Instant created) {
+//        this.created = created;
+//    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "MainInfo{" +
                 "id=" + id +
-                ", created=" + created +
-                ", updated=" + updated +
+//                ", created=" + created +
+//                ", updated=" + updated +
                 ", title='" + title + '\'' +
-                ", welcomeText='" + welcomeText + '\'' +
+                ", text='" + text + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", active=" + active +
                 '}';
     }
-
 }

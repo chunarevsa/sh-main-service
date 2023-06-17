@@ -26,7 +26,7 @@ public class PostService {
     }
 
     public List<Post> getLatestPosts(Long count) {
-        return postRepository.findLastPosts(count); // TODO: check It is work?
+        return postRepository.findAll(); // TODO: findLast
     }
 
     public Page<Post> getPageOfPosts(Pageable pageable) {
@@ -34,13 +34,13 @@ public class PostService {
     }
 
     public Post addPost(PostRequest req) {
-        return postRepository.save(new Post(req.getText(), req.getTitle(), req.getImageUrl()));
+        return postRepository.save(new Post(req.isActive(), req.getText(), req.getTitle(), req.getImageUrl()));
 
     }
 
     public Optional<Post> updatePost(Long id, PostRequest req) {
         return postRepository.findById(id).map(post -> {
-            if (req.getActive() != null) post.setActive(req.getActive());
+            if (req.isActive() != null) post.setActive(req.isActive());
             if (req.getTitle() != null) post.setTitle(req.getTitle());
             if (req.getText() != null) post.setText(req.getText());
             if (req.getImageUrl() != null) post.setImageUrl(req.getImageUrl());
