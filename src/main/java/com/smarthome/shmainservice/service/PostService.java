@@ -29,8 +29,8 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
-    public List<Post> getLatestPosts(Long count) {
-        return postRepository.findAll(); // TODO: findLast
+    public List<Post> getLatestPosts(Integer count) {
+        return postRepository.findLastPosts(count);
     }
 
     public Optional<Post> getPost(Long id) {
@@ -41,22 +41,23 @@ public class PostService {
         return postRepository.save(new Post(req.isActive(), req.getText(), req.getTitle(), req.getImageUrl()));
     }
 
-    public Optional<Post> updatePost(Long id, PostRequest req) {
-        return postRepository.findById(id).map(post -> {
-            if (req.isActive() != null) post.setActive(req.isActive());
-            if (req.getTitle() != null) post.setTitle(req.getTitle());
-            if (req.getText() != null) post.setText(req.getText());
-            if (req.getImageUrl() != null) post.setImageUrl(req.getImageUrl());
-            // TODO check saved or not
-            return post;
+    public Post updatePost(Long id, PostRequest req) throws Exception {
+        Optional<Post> post = postRepository.findById(id).map(it -> {
+            if (req.isActive() != null) it.setActive(req.isActive());
+            if (req.getTitle() != null) it.setTitle(req.getTitle());
+            if (req.getText() != null) it.setText(req.getText());
+            if (req.getImageUrl() != null) it.setImageUrl(req.getImageUrl());
+            return it;
         });
+        return post.map(postRepository::save).orElseThrow(() -> new Exception("Not found"));
     }
 
-    public Optional<Post> deactivatePost(Long id) {
-        return postRepository.findById(id).map(post -> {
-            post.setActive(false);
-            // TODO check saved or not
-            return post;
+    public Post deactivatePost(Long id) throws Exception {
+        Optional<Post> post = postRepository.findById(id).map(it -> {
+            it.setActive(false);
+            return it;
         });
+
+        return post.map(postRepository::save).orElseThrow(() -> new Exception("Not found"));
     }
 }

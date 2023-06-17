@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "refer")
-public class Refer implements DataAuditing {
+public class Refer extends DateAudit {
 
     @Id
     @Column(name = "refer_id")

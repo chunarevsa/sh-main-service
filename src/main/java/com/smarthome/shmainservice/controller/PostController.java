@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/post")
@@ -39,12 +38,12 @@ public class PostController {
     }
 
     @PostMapping("/getPage")
-    public Page<Post> getPageOfPosts(GetPostsRequest req) {
+    public Page<Post> getPageOfPosts(@RequestBody GetPostsRequest req) {
         return postService.getPageOfPosts(req.getPageable());
     }
 
     @GetMapping("/getLast/{count}")
-    public List<Post> getLatestPosts(@PathVariable Long count) {
+    public List<Post> getLatestPosts(@PathVariable Integer count) {
         return postService.getLatestPosts(count);
     }
 
@@ -53,7 +52,6 @@ public class PostController {
         return ResponseUtil.wrapOrNotFound(postService.getPost(id));
     }
 
-    //POST /post/add (front-service, discord-bot-service)
     @PostMapping("/add")
     public ResponseEntity<Post> addPost(@RequestBody PostRequest req) throws URISyntaxException {
         final Post result = postService.addPost(req);
@@ -62,23 +60,19 @@ public class PostController {
                 .body(result);
     }
 
-    //POST /post/{id}/edit (front-service, discord-bot-service)
-    @PostMapping("/{id}/edit")
-    public ResponseEntity updatePost(@PathVariable(value = "id") Long id, PostRequest req) {
-        final Optional<Post> result = postService.updatePost(id, req);
-        return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
-        );
+    @PostMapping("/{id}/update")
+    public ResponseEntity<Post> updatePost(@PathVariable(value = "id") Long id, @RequestBody PostRequest req) throws Exception {
+        final Post result = postService.updatePost(id, req);
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
-    //POST /post/{id}/delete (front-service, discord-bot-service)
     @PostMapping("/{id}/deactivate")
-    public ResponseEntity deactivatePost(@PathVariable(value = "id") Long id) {
-        final Optional<Post> result = postService.deactivatePost(id);
-        return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityDeactivateAlert(applicationName, false, ENTITY_NAME, id.toString())
-        );
+    public ResponseEntity<Post> deactivatePost(@PathVariable(value = "id") Long id) throws Exception {
+        final Post result = postService.deactivatePost(id);
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityDeactivateAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 }

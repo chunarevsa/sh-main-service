@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/mainInfo")
@@ -41,24 +40,4 @@ public class MainController {
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
                 .body(result);
     }
-
-    @PostMapping("/{id}/edit")
-    public ResponseEntity updateMainInfo(@PathVariable(value = "id") Long id, MainInfoRequest req) {
-        final Optional<MainInfo> result = mainInfoService.updateMainInfo(id, req);
-        return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
-        );
-    }
-
-    //POST /post/{id}/delete (front-service, discord-bot-service)
-    @PostMapping("/{id}/deactivate")
-    public ResponseEntity deactivateMainInfo(@PathVariable(value = "id") Long id) {
-        final Optional<MainInfo> result = mainInfoService.deactivateMainInfo(id);
-        return ResponseUtil.wrapOrNotFound(
-                result,
-                HeaderUtil.createEntityDeactivateAlert(applicationName, false, ENTITY_NAME, id.toString())
-        );
-    }
-
 }

@@ -22,27 +22,14 @@ public class MainInfoService {
     }
 
     public MainInfo addMainInfo(MainInfoRequest req) {
-        return mainInfoRepository.save(new MainInfo(true, req.getText(), req.getTitle(), req.getImageUrl()));
+        Optional<MainInfo> oldInfo = getActualMainInfo();
+        MainInfo newInfo = mainInfoRepository.save(new MainInfo(true, req.getText(), req.getTitle(), req.getImageUrl()));
 
-    }
-
-    public Optional<MainInfo> updateMainInfo(Long id, MainInfoRequest req) {
-        return mainInfoRepository.findById(id).map(info -> {
-            if (req.isActive() != null) info.setActive(req.isActive());
-            if (req.getTitle() != null) info.setTitle(req.getTitle());
-            if (req.getText() != null) info.setText(req.getText());
-            if (req.getImageUrl() != null) info.setImageUrl(req.getImageUrl());
-            // TODO check saved or not
-            return info;
-        });
-    }
-
-    public Optional<MainInfo> deactivateMainInfo(Long id) {
-        return mainInfoRepository.findById(id).map(info -> {
+        oldInfo.ifPresent(info -> {
             info.setActive(false);
-            // TODO check saved or not
-            return info;
+            mainInfoRepository.save(info);
         });
+        return newInfo;
     }
 }
 

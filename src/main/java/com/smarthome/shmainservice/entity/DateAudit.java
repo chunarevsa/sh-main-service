@@ -7,20 +7,36 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.Instant;
 
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"create", "update"}, allowGetters = true)
-public interface DataAuditing extends Serializable {
+public abstract class DateAudit implements Serializable {
 
     @CreatedDate
     @JoinColumn(nullable = false, updatable = false)
-    Instant created = null;
+    private Instant created;
 
     @LastModifiedDate
-    @JoinColumn (nullable = false, updatable = true)
-    Instant updated = null;
+    @JoinColumn(nullable = false)
+    private Instant updated;
 
+    public Instant getCreated() {
+        return this.created;
+    }
 
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant getUpdated() {
+        return this.updated;
+    }
+
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
+    }
 }

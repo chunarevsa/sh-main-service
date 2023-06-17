@@ -47,7 +47,7 @@ public class RefersController {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity updateRefer(@PathVariable(value = "id") Long id, ReferRequest req) {
+    public ResponseEntity updateRefer(@PathVariable(value = "id") Long id,  @RequestBody ReferRequest req) {
         final Optional<Refer> result = referService.updateRefer(id, req);
         return ResponseUtil.wrapOrNotFound(
                 result,

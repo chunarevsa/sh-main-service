@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "post")
-public class Post implements DataAuditing{
+public class Post extends DateAudit {
 
     @Id
     @Column(name = "post_id")
@@ -13,15 +13,6 @@ public class Post implements DataAuditing{
 
     @Column(name = "active", nullable = false)
     private Boolean active;
-
-//    @CreatedDate
-//    @JoinColumn(nullable = false, updatable = false)
-//    private Instant created;
-//
-//    @LastModifiedDate
-//    @JoinColumn(nullable = false)
-//    private Instant updated;
-
     @Column(nullable = false)
     private String text;
 
@@ -82,8 +73,6 @@ public class Post implements DataAuditing{
         return "Post{" +
                 "id=" + id +
                 ", active=" + active +
-//                ", created=" + created +
-//                ", updated=" + updated +
                 ", text='" + text + '\'' +
                 ", title='" + title + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
