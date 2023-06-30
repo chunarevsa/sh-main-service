@@ -28,7 +28,7 @@ public class MainController {
         this.mainInfoService = mainInfoService;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<MainInfo> getActualMainInfo() {
         return ResponseUtil.wrapOrNotFound(mainInfoService.getActualMainInfo());
     }
